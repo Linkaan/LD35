@@ -38,7 +38,7 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
-        if (Time.time - lastMonkeyHit > 2f)
+        if (Time.time - lastMonkeyHit > (1.5f * Mathf.Max(0.25f, 1 - time/1000)))
         {
             if (arm.controller.leftArmSegmentCount > arm.controller.rightArmSegmentCount)
             {

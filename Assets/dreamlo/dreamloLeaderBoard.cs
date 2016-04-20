@@ -129,7 +129,7 @@ public class dreamloLeaderBoard : MonoBehaviour {
 	{
 		Score[] scoreList = this.ToScoreArray();
 		
-		if (scoreList == null) return new List<Score>();
+		if (scoreList == null) return null;
 		
 		List<Score> genericList = new List<Score>(scoreList);
 			
@@ -141,8 +141,8 @@ public class dreamloLeaderBoard : MonoBehaviour {
 	public List<Score> ToListHighToLow()
 	{
 		Score[] scoreList = this.ToScoreArray();
-		
-		if (scoreList == null) return new List<Score>();
+
+        if (scoreList == null) return null;
 
 		List<Score> genericList = new List<Score>(scoreList);
 			

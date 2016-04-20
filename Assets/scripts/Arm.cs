@@ -85,8 +85,8 @@ public class Arm : MonoBehaviour {
 
         controller.leftHand = leftHand;
         controller.rightHand = rightHand;
-        controller.leftArmSegmentCount = 5;
-        controller.rightArmSegmentCount = 5;
+        controller.leftArmSegmentCount = 6;
+        controller.rightArmSegmentCount = 6;
 
         leftHand.GetComponent<Rigidbody>().AddForce(Vector3.up * 40.0f);
         rightHand.GetComponent<Rigidbody>().AddForce(Vector3.up * 40.0f);

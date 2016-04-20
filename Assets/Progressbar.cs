@@ -15,19 +15,18 @@ public class Progressbar : MonoBehaviour {
     void Start ()
     {
         segments = new List<GameObject>();
-        segments.Add(null);
     }
 	
 	void Update () {
         float value = Mathf.Max(controller.leftArmSegmentCount, controller.rightArmSegmentCount);
-        if (value != lastValue && segments.Count > 0)
+        if (value != lastValue)
         {
             while (segments.Count > 0)
             {
                 DestroyImmediate(segments[0]);
                 segments.RemoveAt(0);
             }
-            if (value < 0) return;
+            if (value <= 0) return;
             float posX = 0;
             for (int i = 0; i < value-1; i++)
             {

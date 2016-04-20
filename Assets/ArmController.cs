@@ -8,22 +8,22 @@ public class ArmController : MonoBehaviour {
     public float leftArmSegmentCount;
     public float rightArmSegmentCount;
 
-    private float factor = 1.0f;
-
     // Update is called once per frame
     void Update () {
         if (!leftHand || !rightHand) return;
 
-        float leftForce = Mathf.Max(10f * leftArmSegmentCount, 40f);
-        float rightForce = Mathf.Max(10f * rightArmSegmentCount, 40f);
-        if(transform.position.y < 10)
+        float leftForce = Mathf.Max(12f * leftArmSegmentCount, 40f);
+        float rightForce = Mathf.Max(12f * rightArmSegmentCount, 40f);
+        if(transform.position.y < 0.75f)
         {
-            leftHand.GetComponent<Rigidbody>().AddForce(Vector3.up * leftForce * factor);
-            rightHand.GetComponent<Rigidbody>().AddForce(Vector3.up * rightForce * factor);
+            leftHand.GetComponent<Rigidbody>().AddForce(Vector3.up * leftForce);
+            rightHand.GetComponent<Rigidbody>().AddForce(Vector3.up * rightForce);
         }else
         {
-            factor /= 1.25f;
+            leftHand.GetComponent<Rigidbody>().AddForce(Vector3.up * leftForce * 0.3f);
+            rightHand.GetComponent<Rigidbody>().AddForce(Vector3.up * rightForce * 0.3f);
         }
+
         if (Input.GetKey(KeyCode.A))
         {
             leftHand.GetComponent<Rigidbody>().AddForce(Vector3.right * leftForce);

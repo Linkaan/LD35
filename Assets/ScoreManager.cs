@@ -14,8 +14,6 @@ public class ScoreManager : MonoBehaviour {
     private Dictionary<string, Userscore> userScores;
     private dreamloLeaderBoard dl;
 
-    private float waitTime;
-
     enum leaderboardState
     {
         waiting,
@@ -35,11 +33,15 @@ public class ScoreManager : MonoBehaviour {
         this.dl = dreamloLeaderBoard.GetSceneDreamloLeaderboard();
         this.ls = leaderboardState.waiting;
 	}
+
+    float waitTime;
+    int lastCount;
 	
 	void Update () {
-	    if (ls == leaderboardState.leaderboard && Time.time - waitTime > 2f)
+        if (ls == leaderboardState.leaderboard)
         {
             List<dreamloLeaderBoard.Score> scoreList = dl.ToListHighToLow();
+
             if (scoreList != null)
             {
                 int maxToDisplay = 20;
@@ -48,15 +50,24 @@ public class ScoreManager : MonoBehaviour {
                 {
                     count++;
                     SetScore(currentScore.playerName, currentScore.playerName, "score", currentScore.score);
-                    SetScore(currentScore.playerName, currentScore.playerName, "time", currentScore.score);
+                    SetScore(currentScore.playerName, currentScore.playerName, "time", currentScore.seconds);
 
                     if (count >= maxToDisplay) break;
+                }    
+                if (lastCount != scoreList.Count)
+                {
+                    waitTime = Time.time;
                 }
-                button.transform.parent.gameObject.SetActive(false);
-                loading.SetActive(false);
-                scoreBoard.SetActive(true);
-                scoreBoard.GetComponentInChildren<UserscoreList>().UpdateScoreboard();
-                ls = leaderboardState.done;
+
+                if (Time.time - waitTime > 2f)
+                {
+                    button.transform.parent.gameObject.SetActive(false);
+                    loading.SetActive(false);
+                    scoreBoard.SetActive(true);
+                    scoreBoard.GetComponentInChildren<UserscoreList>().UpdateScoreboard();
+                    ls = leaderboardState.done;
+                }
+                lastCount = scoreList.Count;
             }
         }          
 	}
@@ -124,7 +135,6 @@ public class ScoreManager : MonoBehaviour {
     {
         dl.LoadScores();
         ls = leaderboardState.leaderboard;
-        waitTime = Time.time;
     }
 
     public void SubmitScore()
@@ -137,6 +147,5 @@ public class ScoreManager : MonoBehaviour {
         int time = (int) player.time;
         dl.AddScore(value, score, time);        
         ls = leaderboardState.leaderboard;
-        waitTime = Time.time;
     }
 }
